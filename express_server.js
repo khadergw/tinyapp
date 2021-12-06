@@ -37,6 +37,7 @@ const users = {
   }
 };
 
+//not sure about the below function////////////
 function generateRandomString() {
   let output = "";
   let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -51,6 +52,13 @@ app.post("/urls", (req, res) => {
   console.log(req.body);  // Log the POST request body to the console
   res.send("Ok");         // Respond with 'Ok' (we will replace this)
 });
+
+//double check the delete////////////////
+app.post("/urls/:shortURL/delete", (req, res) => {
+  delete urlDatabase.shortURL; 
+  res.redirect("/urls");  
+});
+
 
 
 app.get("/urls/new", (req, res) => {
@@ -74,6 +82,7 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
+//double check longURL/////////////////
 app.get("/urls/:shortURL", (req, res) => {
   const templateVars = { shorturl: req.params.shortURL, longURL:urlDatabase[req.params.shortURL].longURL};
   res.render("urls_show", templateVars);
@@ -95,3 +104,4 @@ app.listen(PORT, () => {
 
 
 //generateRandomString()
+
