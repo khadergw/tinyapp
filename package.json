@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/khadergw/tinyapp/issues"
   },
-  "homepage": "https://github.com/khadergw/tinyapp#readme"
+  "homepage": "https://github.com/khadergw/tinyapp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
