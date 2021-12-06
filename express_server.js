@@ -55,10 +55,16 @@ app.post("/urls", (req, res) => {
 
 //double check the delete////////////////
 app.post("/urls/:shortURL/delete", (req, res) => {
-  delete urlDatabase.shortURL; 
+  delete urlDatabase[req.params.shortURL]; 
   res.redirect("/urls");  
 });
 
+app.post("/urls/:shortURL/edit", (req, res) => {
+  const longURL = req.body.longURL
+  urlDatabase[req.params.shortURL]=longURL;
+  res.send("Ok"); 
+ // res.redirect("/urls");  
+});
 
 
 app.get("/urls/new", (req, res) => {
@@ -84,7 +90,7 @@ app.get("/urls", (req, res) => {
 
 //double check longURL/////////////////
 app.get("/urls/:shortURL", (req, res) => {
-  const templateVars = { shorturl: req.params.shortURL, longURL:urlDatabase[req.params.shortURL].longURL};
+  const templateVars = { shortURL: req.params.shortURL, longURL:urlDatabase[req.params.shortURL]};
   res.render("urls_show", templateVars);
 });
 
