@@ -52,6 +52,25 @@ const users = {
   }
 }
 
+const userAuthenticator = function(users, email, password) {
+  for (let user in users) {
+    if (users[user].email === email) {
+      if (users[user].password=== password) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+const userIDReturner = function(users, email) {
+  for (let user in users) {
+    if (users[user].email === email) {
+      let userID = users[user].id;
+      return userID;
+    }
+  }
+};
 
 const emailHasUser = function(email, users) {
   for (const user in users) {
@@ -177,7 +196,7 @@ if (templateVars.user) {
 });
 
 
-
+//registration errors
 app.post("/register", (req, res) => {
   const submittedEmail = req.body.email;
   const submittedPassword = req.body.password;
@@ -196,6 +215,48 @@ app.post("/register", (req, res) => {
   res.cookie('user_id', req.body.newUserID)
       res.redirect("/urls");
   }    
+});
+
+//new login page
+
+app.get("/login", (req, res) => {
+  // if (cookieHasUser(req.session.user_id, users)) {
+  //   res.redirect("/urls");
+  // } else {
+    let templateVars = {
+      username: req.cookies["username"],
+    };
+    res.render("urls_login", templateVars);
+  //}
+});
+
+//checking login credintials?????????
+
+app.post("/login", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  let userID = userIDReturner(users, email);
+
+  if (userAuthenticator(users, email, password)) {
+    
+    user_id: req.cookies[userID],
+    res.redirect("/urls");
+  } else {
+    const templateVars = {
+      error: "Error in credentials",
+      user: null
+    };
+    res.render("login", templateVars);
+  }
+}
+
+);
+
+//clear the correct user_id cookie ??
+
+app.post("/logout", (req, res) => {
+  res.clearCookie('user_id')
+  res.redirect('/urls');
 });
 
 

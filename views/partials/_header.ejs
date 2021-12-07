@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div> 
+   <!--  <div> 
       <% if(username){ %>
         <%= username %>
         <form
@@ -41,6 +41,22 @@
     <%}%>
     </div>
 
+-->
+
+
+    <% if (username) { %>
+      <form class="form-inline" action="/logout" method="POST" style="padding-top: 0px">
+        <%= username.email %>
+        <button type="submit" class="btn btn-outline-dark" style="margin-left: 1em">Logout</button>
+      </form>
+      <% } else { %>
+      <form class="form-inline" action="/login" method="GET">
+        <button type="submit" class="btn btn-outline-light" style="margin-right: 2em;">Login</button>
+      </form>
+      <form class="form-inline" action="/register" method="GET">
+        <button type="submit" class="btn btn-outline-light">Register</button>
+      </form>
+      <% } %>
  
   </nav>
 </header>
