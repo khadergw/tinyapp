@@ -25,21 +25,32 @@ const urlDatabase = {
 };
 
 
-const users = { 
-  "user1": {
-    id: "user1", 
-    email: "user1@user.com", 
-    // password: "user1"
-    password: "$2a$10$Rb8Unenn5y7JCUPUQen8/.hwf1xmVKkrGhd0PP9KvyWVi8C9z5TJy"
-  },
-  "user2": {
-    id: "user2", 
-    email: "user2@user.com", 
-    password: "user2"
-  }
-};
+// const users = { 
+//   "user1": {
+//     id: "user1", 
+//     email: "user1@user.com", 
+//     // password: "user1"
+//     password: "$2a$10$Rb8Unenn5y7JCUPUQen8/.hwf1xmVKkrGhd0PP9KvyWVi8C9z5TJy"
+//   },
+//   "user2": {
+//     id: "user2", 
+//     email: "user2@user.com", 
+//     password: "user2"
+//   }
+// };
 
-//res.cookie({'username': })
+const users = { 
+  "userRandomID": {
+    id: "userRandomID", 
+    email: "user@example.com", 
+    password: "purple-monkey-dinosaur"
+  },
+ "user2RandomID": {
+    id: "user2RandomID", 
+    email: "user2@example.com", 
+    password: "dishwasher-funk"
+  }
+}
 
 
 // const cookieHasUser = function(cookie, userDatabase) {
@@ -89,7 +100,6 @@ app.post("/login", (req, res) => {
 });
 
 
-//display username
 
 
 
@@ -119,11 +129,37 @@ app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
 
+//display username
+
 app.get("/urls", (req, res) => {
   const templateVars = { 
     username: req.cookies["username"],
     urls: urlDatabase };
   res.render("urls_index", templateVars);
+});
+
+
+app.get("/register", (req, res) => {
+  // const templateVars = { 
+  //   email: req.cookies["email"],
+  //   password: req.cookies["password"],
+  //   username: req.cookies["username"],
+  //   urls: urlDatabase };
+  //   res.render("urls_register", templateVars)
+
+//  const submittedEmail = req.body.email;
+//   const submittedPassword = req.body.password;
+
+ //res.redirect("/urls_register");  
+ let templateVars = {
+  username: req.cookies["username"],
+};
+if (templateVars.user) {
+  res.redirect("/urls");
+} else {
+  res.render("urls_register", templateVars);
+}
+
 });
 
 
