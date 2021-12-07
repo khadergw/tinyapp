@@ -61,13 +61,16 @@ const users = {
 //   } return false;
 // };
 
-//not sure about the below function////////////
-function generateRandomString() {
-  let output = "";
-  let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  for (let i = 0; i < 6; i++) output += possible.charAt(Math.floor(Math.random() * possible.length));
-  return output;
-}
+
+const generateRandomString = function() {
+  let randomString = "";
+  for (let i = 0; i < 6; i++) {
+    const randomCharCode = Math.floor(Math.random() * 26 + 97);
+    const randomChar = String.fromCharCode(randomCharCode);
+    randomString += randomChar;
+  }
+  return randomString;
+};
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -139,6 +142,8 @@ app.get("/urls", (req, res) => {
 });
 
 
+//register a user
+
 app.get("/register", (req, res) => {
   // const templateVars = { 
   //   email: req.cookies["email"],
@@ -162,6 +167,22 @@ if (templateVars.user) {
 
 });
 
+
+
+app.post("/register", (req, res) => {
+  const submittedEmail = req.body.email;
+  const submittedPassword = req.body.password;
+
+  const newUserID = generateRandomString();
+    users[newUserID] = {
+      id: newUserID,
+      email: submittedEmail,
+      password: submittedPassword,
+    };
+  res.cookie('user_id', req.body.newUserID)
+      res.redirect("/urls");
+      
+});
 
 
 app.get("/urls/:shortURL", (req, res) => {
