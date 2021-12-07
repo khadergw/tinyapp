@@ -53,6 +53,15 @@ const users = {
 }
 
 
+const emailHasUser = function(email, users) {
+  for (const user in users) {
+    if (users[user].email === email) {
+      return true;
+    }
+  }
+  return false;
+};
+
 // const cookieHasUser = function(cookie, userDatabase) {
 //   for (const user in userDatabase) {
 //     if (cookie === user) {
@@ -173,6 +182,11 @@ app.post("/register", (req, res) => {
   const submittedEmail = req.body.email;
   const submittedPassword = req.body.password;
 
+  if (!submittedEmail || !submittedPassword) {
+    res.status(400).send("Please include both a valid email and password");
+  } else if (emailHasUser(submittedEmail, users)) {
+    res.status(400).send("An account already exists for this email address");
+  } else {
   const newUserID = generateRandomString();
     users[newUserID] = {
       id: newUserID,
@@ -181,7 +195,7 @@ app.post("/register", (req, res) => {
     };
   res.cookie('user_id', req.body.newUserID)
       res.redirect("/urls");
-      
+  }    
 });
 
 
