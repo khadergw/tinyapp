@@ -14,15 +14,15 @@ const urlDatabase = {
 
 
 const users = { 
-  "userRandomID": {
+  "user1": {
     id: "userRandomID", 
     email: "user@example.com", 
-    password: "purple-monkey-dinosaur"
+    password: "purple"
   },
- "user2RandomID": {
+ "user2": {
     id: "user2RandomID", 
     email: "user2@example.com", 
-    password: "dishwasher-funk"
+    password: "funk"
   }
 }
 
